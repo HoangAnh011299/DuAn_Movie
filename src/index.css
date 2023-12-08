@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.container{
+    width: 90%;
+    margin: 0 auto;
+}
+.pages a{
+    font-weight: 500;
+    margin: 0 10px;
+    font-size: 20px;
+}
+.btn-theme{
+    @apply border border-white px-5 py-2 rounded;
+}
