@@ -36,13 +36,9 @@
   /* background-color: black; */
   color: white;
 }
-.web_contariner{
-  background-image: url(./compunent/img/photo-1489599849927-2ee91cede3ba.avif);
-  background-size: 200vh;
-  background-position: center;
-  color: #fff; /* Màu chữ sẽ dễ đọc hơn trên background mờ */
-  text-align: center;
-  padding: 20px;
-  
+
+:where(.css-dev-only-do-not-override-zcfrx9).ant-input{
+  background-color: transparent !important;
 }
+
 

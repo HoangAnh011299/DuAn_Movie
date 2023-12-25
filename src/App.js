@@ -7,6 +7,7 @@ import Header from './compunent/Header/Header';
 import Spinner from './compunent/Spinner/Spinner';
 import DetailPage from './page/DetailPage/DetailPage';
 import HomeLayout from './layout/HomeLayout';
+import Register from './page/Register/Register';
 
 function App() {
   return (
@@ -14,11 +15,12 @@ function App() {
       <Spinner/>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomeLayout />}>
+          <Route path="/"  element={<HomeLayout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/detail/:idPhim" element={<DetailPage />} />
           </Route>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<Register/>} />
         </Routes>
       </BrowserRouter>
     </div>

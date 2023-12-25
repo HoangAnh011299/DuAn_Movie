@@ -3,13 +3,21 @@
  import { Card } from 'antd';
 import { https } from '../../service/config';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { TURN_OFF, TURN_ON } from '../../redux/constant/spinner';
  const { Meta } = Card;
  
  
  
  export default function ListMovie() {
   const [movieArr, setMovieArr] = useState([]);
+  // useDispatch ~ mapDispathToProps ~ đẩy data lên redux 
+  let dispatch = useDispatch()
+  //bật loading
   useEffect(()=>{
+    dispatch({
+      type: TURN_ON
+    })
     // axios({
     //   url: 'https://movienew.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhim?maNhom=GP09',
     //   method: 'GET',
@@ -21,18 +29,25 @@ import { NavLink } from 'react-router-dom';
     .then((res)=>{
       console.log(res)
       setMovieArr(res.data.content)
+      dispatch({
+        type: TURN_OFF
+      })
     })
     .catch((err)=>{
       console.log(err)
+      dispatch({
+        type: TURN_OFF
+      })
     })
   },[])
 
    
   return  <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 container'>
       {
-        movieArr.map((item)=>{
+        movieArr.map((item,index)=>{
           return (
             <Card
+            key={index}
             hoverable
             style={{
               width: 240,
@@ -41,7 +56,7 @@ import { NavLink } from 'react-router-dom';
           >
             <Meta title={item.tenPhim} />
             <br />
-            <NavLink to={`/detail/${item.idPhim}`} className="px-5 py-2 rounded border-2 border-red-500 ">Xem chi tiết</NavLink> 
+            <NavLink to={`/detail/${item.maPhim}`} className="px-5 py-2 rounded border-2 border-red-500 ">Xem chi tiết</NavLink> 
           </Card>
           )
         })

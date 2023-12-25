@@ -1,106 +1,126 @@
-import React from 'react';
-import { Button, Checkbox, Form, Input, message,  } from 'antd';
-import { https } from '../../service/config';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { SET_INFO } from '../../redux/constant/user';
-
-
-
- 
-
+import React from "react";
+import { Button, Checkbox, Form, Input } from "antd";
+import { https } from "../../service/config";
+import { message } from "antd";
+import { useDispatch } from "react-redux";
+import { SET_INFO } from "../../redux/constant/user";
+import { useNavigate } from "react-router-dom";
+import { loginAction } from "../../redux/action/loginAction";
 
 const FormLogin = () => {
-  let dispatch = useDispatch()
-  let navigate = useNavigate()
-  const onFinish = (values) => {
-    console.log(values)
+  let dispatch = useDispatch();
+  let navigate = useNavigate();
+  const onFinishV2 = (values) => {
     https
-    .post("/api/QuanLyNguoiDung/DangNhap?",values)
-    .then((res)=>{
-      
-      message.success("Đăng nhập thành công")
-      // đảy data xuống localStorage để khi user load trang thì thông tin đăng nhập vẫn còn
-      let dataJson = JSON.stringify(res.data.content);
-      localStorage.setItem("USER_INFO", dataJson)
-      //chuyển hướng về trang chủ
-      navigate("/")
-      message.success("login thành công")
-      //đẩy thông tin user lên redux
-      dispatch({
-           type: SET_INFO,
-           payload: res.data.content,
-     })
-      
-    })
-    .catch((err)=>{
-      console.log(err)
-      message.error("Đã có lỗi xảy ra")
-      
-    })
-    console.log(values)
+      .post("/api/QuanLyNguoiDung/DangNhap", values)
+      .then((res) => {
+        //chuyển hướng về trang chủ
+        navigate("/");
+        // đảy data xuống localStorage để khi user load trang thì thông tin đăng nhập vẫn còn
+        let dataJson = JSON.stringify(res.data.content);
+        localStorage.setItem("USER_INFO", dataJson);
+        message.success("login thành công");
+        //đẩy thông tin user lên redux
+        dispatch({
+          type: SET_INFO,
+          payload: res.data.content,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        message.error("Đã có lỗi xảy ra");
+      });
+    console.log("Success:", values);
+  };
+  const onFinish = (values) => {
+    dispatch(loginAction(values, navigate));
   };
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
- 
-  return ( <Form
-    name="basic"
-    labelCol={{
-      span: 8,
-    }}
-    wrapperCol={{
-      span: 16,
-    }}
-    style={{
-      maxWidth: 600,
-    }}
-    initialValues={{
-      remember: true,
-    }}
-    onFinish={onFinish}
-    onFinishFailed={onFinishFailed}
-    autoComplete="off"
-  >
-    <Form.Item
-      label="Username"
-      name="taiKhoan"
-      rules={[
-        {
-          required: true,
-          message: 'Tài khoản không được bỏ trống!',
-        },
-      ]}
-    >
-      <Input />
-    </Form.Item>
-
-    <Form.Item
-      label="Password"
-      name="matKhau"
-      rules={[
-        {
-          required: true,
-          message: 'Mật khẩu không được bỏ trống!',
-        },
-      ]}
-    >
-      <Input.Password />
-    </Form.Item>
-
-
-    <Form.Item
+  return (
+    <div className="form_login">
+      <Form
+      name="basic"
+      labelCol={{
+        span: 8,
+      }}
       wrapperCol={{
-        offset: 8,
         span: 16,
       }}
+      style={{
+        maxWidth: 400,
+      }}
+      initialValues={{
+        remember: true,
+      }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      autoComplete="off"
+      className="w-1/2"
     >
-      <Button className="bg-orange-600 hover:text-white hover:transparent" htmlType="submit">
-        Submit
-      </Button>
-    </Form.Item>
-  </Form>
-  )
+      <i class="fa fa-lock icon"></i>
+      <h2 style={{ fontSize: "30px", fontWeight: "400", color: "white" }}>
+        Đăng Nhập
+      </h2>
+      <br />
+      <Form.Item
+        label="Username"
+        name="taiKhoan"
+        rules={[
+          {
+            required: true,
+            message: "Tài khoản không được bỏ trống",
+          },
+        ]}
+        style={{
+          backgroundColor: "white",
+        }}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Password"
+        name="matKhau"
+        rules={[
+          {
+            required: true,
+            message: "Mật khẩu không được bỏ trống",
+          },
+        ]}
+        style={{
+          backgroundColor: "white",
+        }}
+      >
+        <Input.Password />
+      </Form.Item>
+
+      <Form.Item
+        wrapperCol={{
+          offset: 8,
+          span: 16,
+        }}
+      >
+        <Button
+          className="bg-black -600 hover:text-white hover:border-transparent"
+          htmlType="submit"
+          style={{
+            marginLeft: "5px",
+            padding: "33px ",
+            display: "flex",
+            alignItems: "center",
+            color: "white",
+            backgroundColor: "#221d1d7f",
+            borderRadius: "10px",
+          }}
+        >
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
+    </div>
+  );
 };
 export default FormLogin;
 
