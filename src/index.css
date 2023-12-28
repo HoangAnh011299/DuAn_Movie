@@ -13,18 +13,23 @@
 .btn-theme {
   @apply border border-white px-5 py-2 rounded;
 }
+.btn-theme-app{
+@apply border border-white bg-black px-5 py-2 rounded;
+}
+.btn-theme-app:hover{
+  background: orangered;
+}
 .btn-btn-theme {
   @apply border border-red-700 px-5 py-2 rounded;
 }
 .web_contariner {
   background-image: url(./compunent/img/photo-1489599849927-2ee91cede3ba.avif);
-  background-size: 200vh;
+  width: 100vw;
+  height: 100vh;
   background-position: center;
   color: #fff; /* Màu chữ sẽ dễ đọc hơn trên background mờ */
   text-align: center;
-  width: 100%;
-  height: 100%;
-  background-size: auto;
+  background-size: cover ;
 }
 .register {
   background-image: url(../public/img.jpg);
@@ -108,4 +113,43 @@
   height: 100vh;
   margin: 0 auto;
 
+}
+
+.news_container{
+  display: flex;
+  align-items: center;
+  height: 700px;
+  background-image: url(../public/img_slider/backgiund_news.jpg);
+  justify-content: space-around;
+}
+.title{
+  line-height: 2;
+  text-align: left;
+}
+
+/* footer */
+.footer{
+  background-color: black;
+  height: 500px;
+}
+.item{
+  background-color: black;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 163px;
+  
+}
+.footer h1{
+  font-size: 20px;
+  font-weight: 500;
+}
+.Book_tickets{
+  color: #fff;
+  cursor: pointer;
+  padding: 7.2px 24px;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 4px;
+  text-decoration: none;
+  background-color: #fb4226;
 }
