@@ -13,10 +13,10 @@
 .btn-theme {
   @apply border border-white px-5 py-2 rounded;
 }
-.btn-theme-app{
-@apply border border-white bg-black px-5 py-2 rounded;
+.btn-theme-app {
+  @apply border border-white bg-black px-5 py-2 rounded;
 }
-.btn-theme-app:hover{
+.btn-theme-app:hover {
   background: orangered;
 }
 .btn-btn-theme {
@@ -29,7 +29,7 @@
   background-position: center;
   color: #fff; /* Màu chữ sẽ dễ đọc hơn trên background mờ */
   text-align: center;
-  background-size: cover ;
+  background-size: cover;
 }
 .register {
   background-image: url(../public/img.jpg);
@@ -107,43 +107,41 @@
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
   height: 50%;
 }
-.detail{
+.detail {
   background-image: url(./compunent/img/photo-1489599849927-2ee91cede3ba.avif);
   width: 100vw;
   height: 100vh;
   margin: 0 auto;
-
 }
 
-.news_container{
+.news_container {
   display: flex;
   align-items: center;
   height: 700px;
   background-image: url(../public/img_slider/backgiund_news.jpg);
   justify-content: space-around;
 }
-.title{
+.title {
   line-height: 2;
   text-align: left;
 }
 
 /* footer */
-.footer{
+.footer {
   background-color: black;
   height: 500px;
 }
-.item{
+.item {
   background-color: black;
   display: flex;
   justify-content: space-between;
   margin-bottom: 163px;
-  
 }
-.footer h1{
+.footer h1 {
   font-size: 20px;
   font-weight: 500;
 }
-.Book_tickets{
+.Book_tickets {
   color: #fff;
   cursor: pointer;
   padding: 7.2px 24px;
@@ -153,3 +151,44 @@
   text-decoration: none;
   background-color: #fb4226;
 }
+
+/* responsive  */
+/* Phần CSS chung */
+body {
+  font-size: 16px;
+}
+
+/* Media query cho laptop */
+@media screen and (min-width: 768px) {
+  .header{
+   
+  }
+
+  .btn-theme:hover {
+    background-color: #c53030;
+  }
+}
+
+/* Media query cho tablet */
+@media screen and (min-width: 992px) {
+  body {
+    font-size: 20px;
+  }
+}
+
+/* Media query cho điện thoại di động */
+@media screen and (max-width: 767px) {
+  .header{
+   position: absolute;
+   background: var(--navColor);
+   box-shadow: var(--sahdow);
+   height: 80px;
+   width: 100px;
+   display: none;
+  }
+  
+}
+
+
+
+

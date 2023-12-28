@@ -28,7 +28,7 @@ export default function Header() {
       );
     } else {
       return (
-        <div className="space-x-3">
+        <div className="space-x-3 ">
         <button
           className="btn-theme  hover:bg-slate-400"
           onClick={() => {
@@ -55,7 +55,7 @@ export default function Header() {
   };
   return (
     <div>
-      <div className="container h-20 flex items-center justify-between">
+      <div className=" container h-20 flex items-center justify-between">
         <span
           onClick={() => {
             navigate("/");

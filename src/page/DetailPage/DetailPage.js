@@ -1,95 +1,114 @@
 import React, { useEffect, useState } from "react";
-
+import { NavLink, useParams } from "react-router-dom";
 import { https } from "../../service/config";
-import { useParams } from "react-router-dom";
-import { Rate, Radio, Space, Tabs, Tooltip } from "antd";
+import { Rate, Tabs } from "antd";
+import moment from "moment";
 
 export default function DetailPage() {
-  const [detail, setDetail] = useState({});
-  // useParams lấy tham số từ url
+  const [detail, setdetail] = useState({});
+  //  useParams lấy tham số trên url
   let { idPhim } = useParams();
-  console.log(" 😂 ~ DetailPage ~ idPhim:", idPhim);
+  console.log("😃 - file: DetailPage.js:10 - DetailPage - idPhim:", idPhim);
 
-  const [system, setSystem] = useState([]);
-
-  const changeTabPosition = (e) => {
-    console.log(" 😂 ~ changeTabPosition ~ changeTabPosition:", e);
-  };
-
+  //  gọi api lấy chi tiết phim
   useEffect(() => {
     https
-      .get(`/api/QuanLyPhim/LayThongTinPhim?MaPhim=${idPhim}`)
+      .get(`/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${idPhim}`)
       .then((res) => {
-        console.log(res);
-        setDetail(res.data.content);
-      })
-      .catch((err) => {
-        console.log(" 😂 ~ .then ~ err:", err);
-      });
-  }, []);
-
-  console.log("system", system);
-  // book ticket
-  useEffect(() => {
-    https
-      .get(`api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${idPhim}`)
-      .then((res) => {
-        setSystem(res.data.content);
+        console.log(res.data.content);
+        setdetail(res.data.content);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+  const onChange = (key) => {
+    console.log(key);
+  };
 
-  // const items = system.map((item, index) => {
-  //   return {
-  //     key: index,
-  //     label: <img className="w-16" src={item.logo} alt="" />,
-  //     // children: (
-        
-  //     // )
-  //   };
-  // });
+  const detailItems = detail.heThongRapChieu?.map((rapChieu, index) => {
+    return {
+      key: index,
+      label: <div>
+              <img className="w-16" src={rapChieu.logo} alt="" />
+              <div>{rapChieu.tenHeThongRap}</div>
+              
+            </div>,
+       children: (
+         <div
+         style={{
+           height: 600,
+          }}
+          className="space-y-5 overflow-y-scroll"
+          >
+          {rapChieu.cumRapChieu.map((cumRap) => (
+            <div key={cumRap.maCumRap} style={{color:"white", fontSize:30}}>
+              
+              <div className="flex">
+              <img
+                className="w-30"
+                src={cumRap.hinhAnh}
+                alt={cumRap.tenCumRap}
+              />
+              <div>
+              <h4>{cumRap.tenCumRap}</h4>
+              {cumRap.lichChieuPhim.map((lichChieu) => (
+                <span key={lichChieu.maLichChieu}>
+                  {/* Customize the content as needed */}
+                  {moment(lichChieu.ngayChieuGioChieu).format("DD-MM-YYYY ~ hh:mm")}
+                  <h1>{lichChieu.tenRap}</h1>
+                </span>
+              ))}
+              </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ),
+    };
+  });
 
   return (
-    <div className="container flex items-center mt-40">
-      <img src={detail.hinhAnh} className="w-96" alt="" />
+    <div className="container">
+      <div className=" md:flex items-center">
+        <img src={detail.hinhAnh} className="w-80 mb-5" alt="" />
+        <div className="text-center  flex-grow ">
+          <h2 className="md:text-5xl text-5xl text-blue-600 font-bold animate-pulse">
+            {detail.tenPhim}
+          </h2>
 
-      <div className="text-center space-y-10 flex-grow">
-        <Rate
-          style={{ fontSize: 40, color: "red" }}
-          allowHalf
-          count={10}
-          value={detail.danhGia}
-        />
-        <h2 className="text-5xl text-white-600 font-bold animate-pulse">
-          {detail.tenPhim}
-        </h2>
-        <p>{detail.ngayKhoiChieu}</p>
+          <Rate
+            className="space-y-5 text-base md:text-xl"
+            style={{ fontSize: 40, color: "red" }}
+            allowHalf
+            count={5}
+            value={detail.danhGia}
+          />
+          <br />
 
-        <button className="btn-theme">
-          <a href={detail.trailer}>Trailer</a>
-        </button>
-        <br />
-        <br />
-        <a href="#" className="Book_tickets">
-          Đặt vé
-        </a>
-        <br />
+          <button className="btn-theme">
+          <a
+            className="text-2xl font-bold "
+            target="_blank"
+            href={detail.trailer}
+          >
+            Trailer
+          </a>
+          </button>
+        
+          <p className="md:px-16 my-5" style={{ textAlign: "left" }}>
+            {detail.moTa}
+          </p>
+        </div>
       </div>
-      {/* ----------------------------------- */}
       <div>
-      <Tabs
-        tabPosition="left"
-        items={new Array(3).fill(null).map((_, i) => {
-          const id = String(i + 1);
-          return {
-            label: <img className="w-16" src="" alt="" />,
-            key: id,
-            children: `Content of Tab ${id}`,
-          };
-        })}
-      />
+        <Tabs
+          className="border border-gray-300"
+          tabPosition="left"
+          defaultActiveKey="1"
+          items={detailItems}
+          onChange={onChange}
+        />
       </div>
     </div>
   );

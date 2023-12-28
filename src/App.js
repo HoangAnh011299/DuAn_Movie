@@ -9,6 +9,7 @@ import DetailPage from './page/DetailPage/DetailPage';
 import HomeLayout from './layout/HomeLayout';
 import Register from './page/Register/Register';
 
+
 function App() {
   return (
     <div className='web_contariner'>
@@ -21,6 +22,7 @@ function App() {
           </Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register/>} />
+         
         </Routes>
       </BrowserRouter>
     </div>
